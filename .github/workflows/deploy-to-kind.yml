@@ -59,6 +59,9 @@ jobs:
           docker pull mysql:8.0.33
           kind load docker-image mysql:8.0.33 --name chart-testing
 
+      - name: Create Namespace
+        run: kubectl create namespace todoapp || true # Використання "|| true" дозволить кроку не впасти, якщо неймспейс вже існує
+
       - name: Set up Helm
         uses: azure/setup-helm@v4.2.0
 
@@ -69,7 +72,6 @@ jobs:
         run: |
           helm install todoapp ./helm-charts/todoapp \
             --namespace todoapp \
-            --create-namespace \
             --dry-run \
             --debug \
             --set todoapp.image.repository=${{ secrets.DOCKERHUB_USERNAME }}/todoapp \
