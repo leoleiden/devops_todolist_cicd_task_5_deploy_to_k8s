@@ -72,21 +72,7 @@ jobs:
         run: helm install todoapp ./helm-charts/todoapp --namespace todoapp --create-namespace --dry-run --debug --set todoapp.image.repository=${{ secrets.DOCKERHUB_USERNAME }}/todoapp --set todoapp.image.tag=latest --set todoapp.secrets.SECRET_KEY=${{ secrets.APP_SECRET_KEY }} --set todoapp.secrets.DB_NAME=${{ secrets.DB_NAME }} --set todoapp.secrets.DB_USER=${{ secrets.DB_USER }} --set todoapp.secrets.DB_PASSWORD=${{ secrets.DB_PASSWORD }} --set mysql.secrets.MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} --set mysql.secrets.MYSQL_USER=${{ secrets.DB_USER }} --set mysql.secrets.MYSQL_PASSWORD=${{ secrets.DB_PASSWORD }}
 
       - name: Helm Upgrade --install --atomic
-        run: |
-          helm upgrade --install todoapp ./helm-charts/todoapp \
-            --namespace todoapp \
-            --create-namespace \
-            --atomic \
-            --timeout 10m0s \
-            --set todoapp.image.repository=${{ secrets.DOCKERHUB_USERNAME }}/todoapp \
-            --set todoapp.image.tag=latest \
-            --set todoapp.secrets.SECRET_KEY=${{ secrets.APP_SECRET_KEY }} \
-            --set todoapp.secrets.DB_NAME=${{ secrets.DB_NAME }} \
-            --set todoapp.secrets.DB_USER=${{ secrets.DB_USER }} \
-            --set todoapp.secrets.DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-            --set mysql.secrets.MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} \
-            --set mysql.secrets.MYSQL_USER=${{ secrets.DB_USER }} \
-            --set mysql.secrets.MYSQL_PASSWORD=${{ secrets.DB_PASSWORD }}
+        run: helm upgrade --install todoapp ./helm-charts/todoapp --namespace todoapp --create-namespace --atomic --timeout 10m0s --set todoapp.image.repository=${{ secrets.DOCKERHUB_USERNAME }}/todoapp --set todoapp.image.tag=latest --set todoapp.secrets.SECRET_KEY=${{ secrets.APP_SECRET_KEY }} --set todoapp.secrets.DB_NAME=${{ secrets.DB_NAME }} --set todoapp.secrets.DB_USER=${{ secrets.DB_USER }} --set todoapp.secrets.DB_PASSWORD=${{ secrets.DB_PASSWORD }} --set mysql.secrets.MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} --set mysql.secrets.MYSQL_USER=${{ secrets.DB_USER }} --set mysql.secrets.MYSQL_PASSWORD=${{ secrets.DB_PASSWORD }}
 
       - name: Get Pods Status
         run: kubectl get pods -n todoapp
