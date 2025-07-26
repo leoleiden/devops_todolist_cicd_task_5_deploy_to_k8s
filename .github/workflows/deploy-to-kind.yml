@@ -57,7 +57,7 @@ jobs:
       - name: Load MySQL image into Kind
         run: |
           docker pull mysql:8.0.33
-          kind load docker-image mysql:8.0.33 --name kind
+          kind load docker-image mysql:8.0.33 --name chart-testing
 
       - name: Set up Helm
         uses: azure/setup-helm@v4.2.0
